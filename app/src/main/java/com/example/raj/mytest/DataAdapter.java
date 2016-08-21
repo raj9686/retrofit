@@ -10,12 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.raj.mytest.Model.Result;
+
 import java.util.ArrayList;
 
 public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
-    private ArrayList<AndroidVersion> android;
+    private ArrayList<Result> android;
 
-    public DataAdapter(ArrayList<AndroidVersion> android) {
+    public DataAdapter(ArrayList<Result> android) {
         this.android = android;
     }
 
@@ -29,8 +31,8 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
     public void onBindViewHolder(DataAdapter.ViewHolder viewHolder, int i) {
 
         viewHolder.tv_name.setText(android.get(i).getName());
-        viewHolder.tv_version.setText(android.get(i).getVer());
-        viewHolder.tv_api_level.setText(android.get(i).getApi());
+        viewHolder.tv_version.setText(android.get(i).getAlpha2_code());
+        viewHolder.tv_api_level.setText(android.get(i).getAlpha3_code());
     }
 
     @Override
