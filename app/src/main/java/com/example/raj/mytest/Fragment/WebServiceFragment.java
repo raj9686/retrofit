@@ -1,19 +1,26 @@
-package com.example.raj.mytest;
+package com.example.raj.mytest.Fragment;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.support.v7.app.AppCompatActivity;
+import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
+import android.view.ViewGroup;
 
+import com.example.raj.mytest.Adapter.AndroidVersionAdapter;
+import com.example.raj.mytest.Adapter.DataAdapter;
+import com.example.raj.mytest.Interface.RequestInterface;
+import com.example.raj.mytest.Model.AndroidModel;
+import com.example.raj.mytest.Model.AndroidVersion;
 import com.example.raj.mytest.Model.GitHubModel;
 import com.example.raj.mytest.Model.GroupModel;
 import com.example.raj.mytest.Model.Result;
+import com.example.raj.mytest.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,15 +31,18 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class MainActivity extends AppCompatActivity {
+/**
+ * Created by Raj on 8/23/2016.
+ */
+public class WebServiceFragment extends android.support.v4.app.Fragment {
 
-    TextView txtUserName, txtpassword;
-    Button btnLogin, btnCancel;
+    private View progressOverlay;
     private RecyclerView recyclerView;
-    private ArrayList<AndroidVersion> data;
     private ArrayList<Result> mData;
     private DataAdapter adapter;
-    private View progressOverlay;
+    private ArrayList<AndroidVersion> data;
+    private Activity activity;
+    private SwipeRefreshLayout mySwipeRefreshLayout;
 
     public static void animateView(final View view, final int toVisibility, float toAlpha, int duration) {
         boolean show = toVisibility == View.VISIBLE;
@@ -51,27 +61,50 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        initViews();
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_web_service, container, false);
+    }
 
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        this.activity = activity;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        initViews();
+        setListner();
+        prepareView();
+    }
+
+    private void prepareView() {
+        animateView(progressOverlay, View.VISIBLE, 0, 200);
+        sampleJSON();
     }
 
     private void initViews() {
-        progressOverlay = findViewById(R.id.progress_overlay);
-        recyclerView = (RecyclerView) findViewById(R.id.card_recycler_view);
+        progressOverlay = getView().findViewById(R.id.progress_overlay);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView = (RecyclerView) getView().findViewById(R.id.card_recycler_view);
         recyclerView.setHasFixedSize(true);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
-        findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                animateView(progressOverlay, View.VISIBLE, 0.4f, 200);
-                gitHub();
-            }
-        });
+        mySwipeRefreshLayout = (SwipeRefreshLayout) getView().findViewById(R.id.swiperefresh);
+    }
+
+    private void setListner() {
+        mySwipeRefreshLayout.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        mySwipeRefreshLayout.setRefreshing(false);
+                        Log.i("Rajesh", "onRefresh called from SwipeRefreshLayout");
+                        sampleJSON();
+
+                    }
+                }
+        );
     }
 
     public void inPathJSON() {
@@ -110,12 +143,19 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<AndroidModel> call, Response<AndroidModel> response) {
                 AndroidModel androidModel = response.body();
-/*                data = new ArrayList<>(Arrays.asList(jsonResponse.getAndroid()));
-                adapter = new DataAdapter(data);*/
+                data = new ArrayList<>(Arrays.asList(androidModel.getAndroid()));
+                AndroidVersionAdapter androidVersionAdapter = new AndroidVersionAdapter(data);
                 Log.e("sampleJSON", "onResponse: " + call.request().url());
-                recyclerView.setAdapter(adapter);
-                animateView(progressOverlay, View.GONE, 0, 200);
+                recyclerView.setAdapter(androidVersionAdapter);
+                recyclerView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        animateView(progressOverlay, View.GONE, 0, 200);
+                    }
+                });
+
             }
+
             @Override
             public void onFailure(Call<AndroidModel> call, Throwable t) {
                 animateView(progressOverlay, View.GONE, 0, 200);
@@ -175,4 +215,3 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 }
-

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.getbase.floatingactionbutton.FloatingActionsMenu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/multiple_actions"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom|end"
+    fab:fab_addButtonColorNormal="@color/colorAccent"
+    fab:fab_addButtonColorPressed="@color/colorPrimary"
+    fab:fab_addButtonPlusIconColor="@android:color/white"
+    fab:fab_labelStyle="@style/menu_labels_style"
+    fab:fab_size="mini">
+
+    <com.getbase.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_photo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        fab:fab_colorNormal="@color/colorPrimaryDark"
+        fab:fab_colorPressed="@color/colorAccent"
+        fab:fab_icon="@drawable/ic_menu"
+        fab:fab_size="mini"
+        fab:fab_title="Take Photo" />
+
+    <com.getbase.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_video"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        fab:fab_colorNormal="@color/colorPrimaryDark"
+        fab:fab_colorPressed="@color/colorAccent"
+        fab:fab_icon="@drawable/ic_menu"
+        fab:fab_size="mini"
+        fab:fab_title="Record Video" />
+
+
+</com.getbase.floatingactionbutton.FloatingActionsMenu>

@@ -1,5 +1,5 @@
 
-package com.example.raj.mytest;
+package com.example.raj.mytest.Model;
 
 
 public class Geoname {

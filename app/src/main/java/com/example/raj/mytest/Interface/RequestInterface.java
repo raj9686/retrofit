@@ -1,11 +1,12 @@
-package com.example.raj.mytest;
+package com.example.raj.mytest.Interface;
 
+import com.example.raj.mytest.Model.AndroidModel;
+import com.example.raj.mytest.Model.GeoModel;
 import com.example.raj.mytest.Model.GitHubModel;
 import com.example.raj.mytest.Model.GroupModel;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
-import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 

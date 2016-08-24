@@ -1,5 +1,5 @@
 
-package com.example.raj.mytest;
+package com.example.raj.mytest.Model;
 
 import java.util.ArrayList;
 import java.util.List;

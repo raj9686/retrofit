@@ -1,4 +1,4 @@
-package com.example.raj.mytest;
+package com.example.raj.mytest.Model;
 
 /**
  * Created by Raj on 8/18/2016.
