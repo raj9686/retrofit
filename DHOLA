@@ -1,0 +1,15 @@
+Privacy-relevant Android permissions requested by this app
+
+CAMERA
+Used for permissions that are associated with accessing camera or capturing images/video from the device.
+This permission allows this application to capture the user’s selfies in order for them to be viewed in a timeline within this application.
+
+
+PHONE
+Used for permissions that are associated telephony features.
+Allows, for instance, read only access to phone state, including the phone number of the device, current cellular network information, the status of any ongoing calls, and a list of any PhoneAccounts registered on the device. This, more specifically, allows this application to play audio and be muted when a phone call is incoming.
+
+
+CONTACT
+Used for permissions that are associated telephony features.
+Allows, for instance, read only access to phone state, including the phone number of the device, current cellular network information, the status of any ongoing calls, and a list of any PhoneAccounts registered on the device. This, more specifically, allows this application to play audio and be muted when a phone call is incoming.
